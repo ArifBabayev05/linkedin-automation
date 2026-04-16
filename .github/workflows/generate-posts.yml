@@ -26,6 +26,17 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
+      - name: Debug secrets (var olub-olmamasını göstər, value YOX)
+        run: |
+          echo "AZURE_OPENAI_API_KEY set: ${{ secrets.AZURE_OPENAI_API_KEY != '' }}"
+          echo "AZURE_OPENAI_ENDPOINT set: ${{ secrets.AZURE_OPENAI_ENDPOINT != '' }}"
+          echo "AZURE_OPENAI_DEPLOYMENT set: ${{ secrets.AZURE_OPENAI_DEPLOYMENT != '' }}"
+          echo "AZURE_OPENAI_API_VERSION set: ${{ secrets.AZURE_OPENAI_API_VERSION != '' }}"
+          echo "GOOGLE_SHEETS_ID set: ${{ secrets.GOOGLE_SHEETS_ID != '' }}"
+          echo "GOOGLE_SERVICE_ACCOUNT_JSON set: ${{ secrets.GOOGLE_SERVICE_ACCOUNT_JSON != '' }}"
+          echo "TELEGRAM_BOT_TOKEN set: ${{ secrets.TELEGRAM_BOT_TOKEN != '' }}"
+          echo "TELEGRAM_CHAT_ID set: ${{ secrets.TELEGRAM_CHAT_ID != '' }}"
+
       - name: Run automation
         env:
           AZURE_OPENAI_API_KEY: ${{ secrets.AZURE_OPENAI_API_KEY }}
