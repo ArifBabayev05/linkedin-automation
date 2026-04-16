@@ -2,7 +2,7 @@ import 'dotenv/config';
 import { SOURCES } from './config.js';
 import { fetchAllArticles, fetchFullContent } from './scraper.js';
 import { generateLinkedInPost } from './ai.js';
-import { getProcessedUrls, appendPosts } from './sheets.js';
+
 import {
   sendEmailNotification,
   buildEmailSuccessContent,
@@ -17,22 +17,13 @@ async function main() {
   console.log('🚀 LinkedIn post automation başladı');
   console.log(`   Lookback: ${DAYS_LOOKBACK} gün | Max posts: ${MAX_POSTS}\n`);
 
-  // 1. Əvvəl emal olunmuş URL-ləri yüklə
-  console.log('📋 Google Sheets-dən mövcud URL-lər yüklənir...');
-  const processedUrls = await getProcessedUrls();
-  console.log(`   ${processedUrls.size} URL artıq mövcuddur\n`);
-
   // 2. Bütün saytlardan məqalələri çək
   console.log('🌐 Saytlardan məqalələr çəkilir...');
   const allArticles = await fetchAllArticles(SOURCES, DAYS_LOOKBACK);
   console.log(`\n📊 Toplam ${allArticles.length} məqalə tapıldı`);
 
-  // 3. Dedup: artıq emal olunanları sil
-  const newArticles = allArticles.filter((a) => !processedUrls.has(a.url));
-  console.log(`   ${newArticles.length} məqalə yenidir (dedup sonrası)`);
-
   // 4. Ən yenilərini götür, maksimum MAX_POSTS
-  const sortedArticles = newArticles
+  const sortedArticles = allArticles
     .sort((a, b) => b.publishedAt.getTime() - a.publishedAt.getTime())
     .slice(0, MAX_POSTS);
 
@@ -40,7 +31,7 @@ async function main() {
 
   if (sortedArticles.length === 0) {
     console.log('ℹ️  Yeni məqalə yoxdur, çıxılır.');
-    const { subject, html } = buildEmailSuccessContent([], process.env.GOOGLE_SHEETS_ID!);
+    const { subject, html } = buildEmailSuccessContent([]);
     await sendEmailNotification(subject, html);
     return;
   }
@@ -68,14 +59,11 @@ async function main() {
 
   console.log(`\n✅ ${generatedPosts.length} post uğurla generasiya olundu`);
 
-  // 6. Google Sheets-ə yaz
-  console.log('💾 Google Sheets-ə yazılır...');
-  await appendPosts(generatedPosts);
-  console.log('   ✓ Yazıldı\n');
+
 
   // 7. Telegram bildiriş
   console.log('📢 Telegram bildiriş göndərilir...');
-  const { subject, html } = buildEmailSuccessContent(generatedPosts, process.env.GOOGLE_SHEETS_ID!);
+  const { subject, html } = buildEmailSuccessContent(generatedPosts);
   await sendEmailNotification(subject, html);
   console.log('   ✓ Göndərildi\n');
 

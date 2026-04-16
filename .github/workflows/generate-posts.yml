@@ -31,22 +31,18 @@ jobs:
           echo "AZURE_OPENAI_API_KEY set: ${{ secrets.AZURE_OPENAI_API_KEY != '' }}"
           echo "AZURE_OPENAI_ENDPOINT set: ${{ secrets.AZURE_OPENAI_ENDPOINT != '' }}"
           echo "AZURE_OPENAI_DEPLOYMENT set: ${{ secrets.AZURE_OPENAI_DEPLOYMENT != '' }}"
-          echo "AZURE_OPENAI_API_VERSION set: ${{ secrets.AZURE_OPENAI_API_VERSION != '' }}"
-          echo "GOOGLE_SHEETS_ID set: ${{ secrets.GOOGLE_SHEETS_ID != '' }}"
-          echo "GOOGLE_SERVICE_ACCOUNT_JSON set: ${{ secrets.GOOGLE_SERVICE_ACCOUNT_JSON != '' }}"
-          echo "TELEGRAM_BOT_TOKEN set: ${{ secrets.TELEGRAM_BOT_TOKEN != '' }}"
-          echo "TELEGRAM_CHAT_ID set: ${{ secrets.TELEGRAM_CHAT_ID != '' }}"
+          echo "EMAIL_USER set: ${{ secrets.EMAIL_USER != '' }}"
+          echo "EMAIL_PASS set: ${{ secrets.EMAIL_PASS != '' }}"
 
       - name: Run automation
         env:
           AZURE_OPENAI_API_KEY: ${{ secrets.AZURE_OPENAI_API_KEY }}
           AZURE_OPENAI_ENDPOINT: ${{ secrets.AZURE_OPENAI_ENDPOINT }}
           AZURE_OPENAI_DEPLOYMENT: ${{ secrets.AZURE_OPENAI_DEPLOYMENT }}
-          AZURE_OPENAI_API_VERSION: ${{ secrets.AZURE_OPENAI_API_VERSION }}
-          GOOGLE_SHEETS_ID: ${{ secrets.GOOGLE_SHEETS_ID }}
-          GOOGLE_SERVICE_ACCOUNT_JSON: ${{ secrets.GOOGLE_SERVICE_ACCOUNT_JSON }}
-          TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
-          TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
+          AZURE_OPENAI_API_VERSION: ${{ secrets.AZURE_OPENAI_API_VERSION || '2024-10-21' }}
+          EMAIL_USER: ${{ secrets.EMAIL_USER }}
+          EMAIL_PASS: ${{ secrets.EMAIL_PASS }}
+          EMAIL_TO: ${{ secrets.EMAIL_TO }}
           DAYS_LOOKBACK: '4'
           MAX_POSTS_PER_RUN: '10'
         run: npm start

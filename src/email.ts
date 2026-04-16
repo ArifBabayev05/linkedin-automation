@@ -29,9 +29,7 @@ export async function sendEmailNotification(subject: string, htmlContent: string
   await transporter.sendMail(mailOptions);
 }
 
-export function buildEmailSuccessContent(posts: GeneratedPost[], sheetId: string): { subject: string, html: string } {
-  const sheetUrl = `https://docs.google.com/spreadsheets/d/${sheetId}`;
-  
+export function buildEmailSuccessContent(posts: GeneratedPost[]): { subject: string, html: string } {
   let postsHtml = '';
   for (const p of posts) {
     postsHtml += `
@@ -49,8 +47,7 @@ export function buildEmailSuccessContent(posts: GeneratedPost[], sheetId: string
   const html = `
     <div style="font-family: sans-serif; max-width: 600px; margin: auto;">
       <h2>LinkedIn Automation Nəticələri</h2>
-      <p>${posts.length} yeni post generasiya olundu və Google Sheets-ə əlavə edildi.</p>
-      <p><a href="${sheetUrl}" style="background: #0077b5; color: white; padding: 10px 20px; text-decoration: none; border-radius: 5px;">Google Sheets-ə bax</a></p>
+      <p>${posts.length} yeni post generasiya olundu.</p>
       <hr />
       ${postsHtml}
     </div>
