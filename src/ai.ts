@@ -52,7 +52,7 @@ export async function generateLinkedInPost(article: Article): Promise<string> {
       },
     ],
     temperature: 0.7,
-    max_tokens: 600,
+    max_completion_tokens: 800,
   });
 
   const post = response.choices[0]?.message?.content?.trim();

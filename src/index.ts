@@ -61,8 +61,8 @@ async function main() {
 
 
 
-  // 7. Telegram bildiriş
-  console.log('📢 Telegram bildiriş göndərilir...');
+  // 7. Email bildiriş
+  console.log('📢 Email bildiriş göndərilir...');
   const { subject, html } = buildEmailSuccessContent(generatedPosts);
   await sendEmailNotification(subject, html);
   console.log('   ✓ Göndərildi\n');
@@ -77,7 +77,7 @@ main().catch(async (err) => {
     const { subject, html } = buildEmailErrorContent(err as Error);
     await sendEmailNotification(subject, html);
   } catch {
-    // Telegram da uğursuz olsa, susurq
+    // Email də uğursuz olsa, susuruq
   }
 
   process.exit(1);
