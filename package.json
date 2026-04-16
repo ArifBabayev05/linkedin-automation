@@ -1,0 +1,27 @@
+{
+  "name": "linkedin-auto-poster",
+  "version": "1.0.0",
+  "description": "Həftədə 2 dəfə saytlardan məqalə çəkib Azure OpenAI ilə LinkedIn post yazır",
+  "type": "module",
+  "scripts": {
+    "start": "tsx src/index.ts",
+    "dev": "tsx --watch src/index.ts"
+  },
+  "dependencies": {
+    "@azure/openai": "^2.0.0",
+    "axios": "^1.7.7",
+    "cheerio": "^1.0.0",
+    "date-fns": "^4.1.0",
+    "dotenv": "^16.4.5",
+    "googleapis": "^144.0.0",
+    "nodemailer": "^8.0.5",
+    "openai": "^4.73.0",
+    "rss-parser": "^3.13.0"
+  },
+  "devDependencies": {
+    "@types/node": "^22.10.0",
+    "@types/nodemailer": "^8.0.0",
+    "tsx": "^4.19.2",
+    "typescript": "^5.7.2"
+  }
+}
